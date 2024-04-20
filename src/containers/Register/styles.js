@@ -85,3 +85,28 @@ font-weight: 700;
 font-family: "Poppins";
 
 `
+
+export const SignInLink = styled.h2`
+    color: #ffffff;
+
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Poppins";
+
+    margin-top: 40px;
+
+    a{
+        cursor: pointer;
+        text-decoration: underline;
+
+        &:hover{
+        color: #6F357C;
+;
+        }
+
+        &:active{
+        opacity: 0.5;
+        }
+    }
+
+`

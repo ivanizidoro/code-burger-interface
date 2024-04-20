@@ -1,12 +1,14 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
+import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
 import Button from '../../components/Button'
 import api from '../../services/api'
-import { Container, Background, LoginImage, ContainerItens, P, Input, ErrorMessage } from './styles'
+import { Container, Background, LoginImage, ContainerItens, P, Input, ErrorMessage, SignInLink } from './styles'
 import Logo from "../../assets/logo.png"
 
 
@@ -28,11 +30,25 @@ function Register() {
   })
 
   const onSubmit = async clientData => {
-    const response = await api.post('users', {
-      name: clientData.name,
-      email: clientData.email,
-      password: clientData.password
-    })
+    try {
+      const { status } = await api.post('users', {
+        name: clientData.name,
+        email: clientData.email,
+        password: clientData.password
+      },
+        { validateStatus: () => true }
+      )
+
+      if (status === 201 || status === 200) {
+        toast.success('Cadastro Criado com sucesso')
+      } else if (status === 409) {
+        toast.error('E-mail já cadastrado! Faça login para continuar')
+      } else {
+        throw new Error()
+      }
+    } catch (err) {
+      toast.error('Falha no sistema! Tente novamente')
+    }
   }
 
   return (
@@ -63,6 +79,7 @@ function Register() {
 
           <Button type="submit" style={{ marginTop: 40 }}>CONFIRMAR CADASTRO</Button>
         </form>
+        <SignInLink>Já possui conta? <Link style={{color: 'white'}} to='/login'>Clique aqui.</Link></SignInLink>
       </ContainerItens>
     </Container>
   )

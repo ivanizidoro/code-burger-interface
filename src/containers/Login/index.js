@@ -1,9 +1,12 @@
 import React from 'react'
 import { useForm } from "react-hook-form"
+import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 
 import * as Yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
+import { useUser } from '../../hooks/UserContext'
 import Button from '../../components/Button'
 import api from '../../services/api'
 import { Container, Background, LoginImage, ContainerItens, P, Input, SignInLink, ErrorMessage } from './styles'
@@ -11,6 +14,8 @@ import Logo from "../../assets/logo.png"
 
 
 function Login() {
+
+  const { putUserData } = useUser()
 
   const schema = Yup.object().shape({
     email: Yup.string().email('Digite um e-mail válido').required('E-mail é obrigatório'),
@@ -26,10 +31,19 @@ function Login() {
   })
 
   const onSubmit = async clientData => {
-    const response = await api.post('session', {
-      email: clientData.email,
-      password: clientData.password
-    })
+    const { data } = await toast.promise(
+      api.post('session', {
+        email: clientData.email,
+        password: clientData.password
+      }),
+      {
+        pending: 'Verificando seus dados',
+        success: 'Seja bem-vindo(a)',
+        error: 'Verifique seu e-mail e senha'
+      }
+    )
+
+    putUserData(data)
   }
 
   return (
@@ -52,7 +66,7 @@ function Login() {
 
           <Button type="submit" style={{ marginTop: 40 }}>ENTRAR</Button>
         </form>
-        <SignInLink>Não possui conta? <a>Clique aqui.</a></SignInLink>
+        <SignInLink>Não possui conta? <Link style={{color: 'white'}} to='/cadastro'>Clique aqui.</Link></SignInLink>
 
       </ContainerItens>
     </Container>
