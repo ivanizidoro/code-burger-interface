@@ -106,11 +106,11 @@ export const Background = styled.h2`
 
 export const ErrorMessage = styled.p`
 
-color: #cc1717;
-margin-top: 5px;
+    color: #cc1717;
+    margin-top: 5px;
 
-font-size: 18px;
-font-weight: 700;
-font-family: "Poppins";
+    font-size: 18px;
+    font-weight: 700;
+    font-family: "Poppins";
 
 `
