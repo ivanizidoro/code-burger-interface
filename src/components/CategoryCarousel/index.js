@@ -21,16 +21,18 @@ function CategoryCarousel() {
   return (
     <Container>
       <h1>CATEGORIAS</h1>
-      <Carousel itemsToShow={4}>
-        {
-          categories && categories.map(category => (
-            <Carousels key={category.id}>
-              <img src={category.url} alt="foto da categoria" />
-              <button>{category.name}</button>
-            </Carousels>
-          ))
-        }
-      </Carousel>
+      <Carousels>
+        <Carousel itemsToShow={4}>
+          {
+            categories && categories.map(category => (
+              <div key={category.id}>
+                <img src={category.url} alt="foto da categoria"/>
+                <h1>{category.name}</h1>
+              </div>
+            ))
+          }
+        </Carousel>
+      </Carousels>
     </Container>
   )
 }

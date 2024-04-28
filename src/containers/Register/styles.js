@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import Background2 from '../../assets/background.png'
+import Background2 from '../../assets/containe-home.jpg'
 import Background1 from '../../assets/background1.jpg'
 
 export const Container = styled.div`
